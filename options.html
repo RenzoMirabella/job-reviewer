@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Mi perfil · Evaluador de avisos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <div class="topbar">
+      <h1>Mi perfil</h1>
+      <button id="historyBtn" class="small">Mis avisos</button>
+    </div>
+    <p class="note">Se va completando solo con las preguntas que aparecen al evaluar avisos. Acá podés revisarlo o corregirlo. Todo se guarda en este navegador.</p>
+
+    <h2>Experiencia y estudios</h2>
+    <div class="grid">
+      <label for="years">Años de experiencia laboral relacionada</label>
+      <input id="years" type="number" min="0" max="40" step="0.5" placeholder="Sin responder">
+      <label for="status">Estado de la carrera</label>
+      <select id="status"><option value="">Sin responder</option><option value="estudiante_avanzado">Estudiante avanzado</option><option value="graduado">Graduado</option></select>
+      <label for="city">Ciudad donde vivís</label>
+      <input id="city" placeholder="Sin responder">
+      <label for="ba">¿Te mudarías a Buenos Aires?</label>
+      <select id="ba"><option value="">Sin responder</option><option value="true">Sí</option><option value="false">No</option></select>
+    </div>
+    <label for="careers" style="display:block;margin-top:10px">Tu carrera (si son varias, separadas por coma)</label>
+    <input id="careers" placeholder="Ej.: Economía">
+    <label for="related" style="display:block;margin-top:8px">Otros estudios que suman: cursos, diplomaturas (separados por coma)</label>
+    <input id="related" placeholder="Ej.: Curso de Análisis de Datos">
+    <label for="gradNote" style="display:block;margin-top:8px">Nota sobre tu título (aparece cuando un aviso pide graduados)</label>
+    <input id="gradNote" placeholder="Ej.: Me recibo este año: aclararlo en el CV">
+
+    <h2>Idiomas</h2>
+    <p class="note">Cuentan como cualquier requisito: si un aviso pide portugués excluyente y no lo tenés, lo ves en "Te falta". El idioma en que está escrito el aviso cuenta como pedido, salvo que sea tu lengua nativa.</p>
+    <div class="grid">
+      <label for="native">Lengua nativa</label>
+      <select id="native"></select>
+    </div>
+    <div id="langs" class="grid" style="margin-top:6px"></div>
+
+    <h2>Herramientas</h2>
+    <div id="skills" class="grid"></div>
+    <div class="card" style="margin-top:12px">
+      <b>Agregar una herramienta que no está en la lista</b>
+      <p class="note">Con la IA activada, te las propone sola cuando aparecen en un aviso. También podés sumarlas acá.</p>
+      <div class="grid">
+        <label for="customName">Nombre</label><input id="customName" placeholder="Ej.: KoboCollect">
+        <label for="customTerms">Otros nombres con que aparece (opcional, separados por coma)</label><input id="customTerms" placeholder="Ej.: Kobo Collect, KoBoToolbox">
+        <label for="customLevel">Tu nivel</label>
+        <select id="customLevel"><option value="">Sin responder</option><option value="0">No lo manejo</option><option value="1">Básico</option><option value="2">Intermedio</option><option value="3">Avanzado</option></select>
+      </div>
+      <div class="row"><button id="addCustom" class="small primary">Agregar</button><span id="customMsg" class="saved"></span></div>
+      <p id="ignored" class="note" style="margin-top:8px"></p>
+    </div>
+
+    <div class="row" style="margin-top:16px">
+      <button id="save" class="primary">Guardar</button>
+      <button id="reset">Empezar de cero</button>
+      <span id="saved" class="saved"></span>
+    </div>
+
+    <h2 id="ia">Análisis con IA (opcional)</h2>
+    <p class="note">Usa tu propia clave de API. <b>Gemini</b> tiene plan gratuito (clave en <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">Google AI Studio</a>); en ese plan Google puede usar lo que le mandás (el aviso y tu perfil) para mejorar sus productos. <b>Claude</b> y <b>DeepSeek</b> cobran centavos por aviso; la suscripción a Claude no incluye la API, la clave se saca en la Claude Console.</p>
+    <div class="grid">
+      <label for="provider">Proveedor</label>
+      <select id="provider"><option value="none">Ninguno (solo reglas)</option><option value="gemini">Gemini (Google)</option><option value="anthropic">Claude (Anthropic)</option><option value="deepseek">DeepSeek</option></select>
+      <label for="model">Modelo (vacío = el recomendado)</label>
+      <input id="model">
+    </div>
+    <label for="key" style="display:block;margin-top:8px">Clave de API</label>
+    <input id="key" type="password" autocomplete="off">
+    <div class="grid" style="margin-top:8px">
+      <label for="companiesMode">Buscar información de la empresa</label>
+      <select id="companiesMode"><option value="auto">Automático (avisos verdes y amarillos)</option><option value="manual">Solo cuando toco el botón</option><option value="off">Nunca</option></select>
+      <label for="searchModel">Modelo para buscar empresas (vacío = el recomendado)</label>
+      <input id="searchModel">
+    </div>
+    <p class="note">Cada empresa se busca una sola vez y queda guardada; se vuelve a buscar sola a los 6 meses. Con Gemini, la búsqueda en Google solo funciona en el plan pago (5.000 búsquedas gratis por mes, después $14 cada 1.000); en el plan gratuito la extensión describe la empresa con lo que el modelo ya sabe y lo marca así. DeepSeek no busca en internet.</p>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="aiAuto"> Analizar con IA automáticamente cada aviso nuevo (para que te proponga herramientas que no conozco)</label>
+    <label for="notes" style="display:block;margin-top:8px">Notas extra para la IA (proyectos, experiencia, lo que quieras que considere)</label>
+    <textarea id="notes" style="min-height:70px"></textarea>
+    <div class="row"><button id="saveAI" class="primary">Guardar</button><span id="savedAI" class="saved"></span></div>
+
+    <h2 id="sheets">Google Sheets (opcional)</h2>
+    <p class="note">Copia cada aviso a una hoja tuya, con cuatro pestañas: <b>Avisos</b> (uno por fila, con estado, motivo, descripción y cómo postularte), <b>Requisitos</b> (una fila por cada requisito de cada aviso, ideal para tablas dinámicas), <b>Empresas</b> (lo que se buscó de cada empresa) y <b>Perfil</b>. La extensión sigue guardando todo aunque no la conectes.</p>
+    <p class="warn">¿Ya tenías la hoja conectada? Copiá el código nuevo, pegalo en Apps Script, guardá y tocá <b>Implementar → Administrar implementaciones → ✏️ (editar) → Versión: Nueva versión → Implementar</b>. Así el link no cambia y la hoja puede devolver las empresas guardadas.</p>
+    <ol class="steps">
+      <li>Creá una hoja nueva en <a href="https://sheets.new" target="_blank" rel="noopener">sheets.new</a>.</li>
+      <li>En la hoja, entrá a <b>Extensiones → Apps Script</b>. Borrá lo que haya y pegá este código: <button id="copyScript" class="small">Copiar código</button> <span id="copied" class="saved"></span></li>
+      <li>Guardá (ícono de disquete) y tocá <b>Implementar → Nueva implementación</b>. En el engranaje elegí <b>Aplicación web</b>, con "Ejecutar como: <b>Yo</b>" y "Quién tiene acceso: <b>Cualquier usuario</b>". Tocá Implementar y autorizá el acceso. Si Google avisa que la app no está verificada, entrá a <b>Configuración avanzada → Ir a …</b>: es tu propio script.</li>
+      <li>Copiá la <b>URL de la aplicación web</b> (termina en <code>/exec</code>) y pegala acá:</li>
+    </ol>
+    <input id="sheetUrl" placeholder="https://script.google.com/macros/s/…/exec">
+    <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="autoSync"> Sincronizar sola cada vez que evalúo o edito un aviso</label>
+    <div class="row">
+      <button id="saveSheet" class="primary">Guardar y probar</button>
+      <button id="syncNow">Sincronizar ahora</button>
+      <button id="importCompanies">Traer empresas de la hoja</button>
+      <span id="sheetStatus" class="note"></span>
+    </div>
+    <div id="restoreBox" class="card" hidden style="margin-top:10px">
+      <b>¿Reinstalaste la extensión?</b>
+      <p class="note">La hoja tiene datos y la extensión está vacía. Para no perderlos, la sincronización está frenada. Restaurar trae tu perfil, tus avisos (con estado y notas) y las empresas. Si la hoja es de una versión anterior y no tiene el texto de los avisos, los reconstruyo con sus requisitos.</p>
+      <div class="row tight"><button id="restoreBtn" class="small primary">Restaurar desde la hoja</button><button id="overwriteBtn" class="small ghost">No, empezar de cero y sobrescribir la hoja</button></div>
+    </div>
+    <details><summary>Ver el código</summary><textarea id="script" readonly style="min-height:260px;font-family:ui-monospace,monospace;font-size:12px"></textarea></details>
+    <p class="note">El código trae una clave secreta propia, así que solo esta extensión puede escribir en tu hoja. No compartas el link ni el código.</p>
+  </main>
+  <script src="profile-default.js"></script>
+  <script src="rules.js"></script>
+  <script src="store.js"></script>
+  <script src="ai.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

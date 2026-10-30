@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Mis avisos · Evaluador de avisos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wide">
+    <div class="topbar">
+      <h1>Mis avisos</h1>
+      <div class="row tight">
+        <button id="syncBtn" class="small">Sincronizar con Sheets</button>
+        <button id="csvJobs" class="small">CSV de avisos</button>
+        <button id="csvReqs" class="small">CSV de requisitos</button>
+        <button id="profileBtn" class="small">Mi perfil</button>
+      </div>
+    </div>
+    <p id="syncInfo" class="note"></p>
+    <div id="content"></div>
+  </main>
+  <script src="profile-default.js"></script>
+  <script src="rules.js"></script>
+  <script src="store.js"></script>
+  <script src="ai.js"></script>
+  <script src="history.js"></script>
+</body>
+</html>

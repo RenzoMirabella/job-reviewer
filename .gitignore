@@ -1,0 +1,14 @@
+# Datos personales: nunca se suben
+# (avisos guardados como .md en la raíz y exportaciones de "Mis avisos")
+/*.md
+!/README.md
+*.csv
+mis-avisos/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
+*.zip

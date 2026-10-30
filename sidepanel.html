@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Evaluador de avisos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <div class="topbar">
+      <h1>Evaluador de avisos</h1>
+      <div class="row tight">
+        <button id="historyBtn" class="small">Mis avisos</button>
+        <button id="optBtn" class="small">Mi perfil</button>
+      </div>
+    </div>
+    <div id="result">
+      <p class="empty">Seleccioná el texto completo de un aviso (con "ver más" desplegado), hacé clic derecho y elegí <b>Evaluar este aviso</b>.<br><br>La primera vez te voy a preguntar tu nivel en lo que pida el aviso. Lo guardo y no te lo vuelvo a preguntar.</p>
+    </div>
+
+    <details id="pasteBox">
+      <summary>Pegar un aviso a mano</summary>
+      <textarea id="paste" placeholder="Pegá acá el texto del aviso"></textarea>
+      <div class="row"><button id="evalPaste" class="primary">Evaluar</button></div>
+    </details>
+  </main>
+  <script src="profile-default.js"></script>
+  <script src="rules.js"></script>
+  <script src="store.js"></script>
+  <script src="ai.js"></script>
+  <script src="sidepanel.js"></script>
+</body>
+</html>
